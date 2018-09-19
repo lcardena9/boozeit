@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Image, } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image, ImageBackground } from 'react-native';
 import Button from '../utilities/button';
 import { connect } from 'react-redux';
 
 const mapDispatchToProps = dispatch => ({
     addUser: user => dispatch({ type: 'NEW_USER', newUser: user }),
-    changeScreen: page => dispatch({ type: 'CHANGE_PAGE', newPage: page })
 });
 
 class SignIn extends Component {
@@ -14,82 +13,89 @@ class SignIn extends Component {
         password: '',
     }
 
-    submitUser = () => {
-        let { username, password } = this.state;
-        {
-            this.props.addUser({ username, email, password });
+    static navigationOptions = {
+        header: null
+    }
 
-            this.setState({
-                username: '',
-                password: '',
-            })
-        }
+    signIntoApp = () => {
+        this.props.navigation.navigate('UserPage');
+    }
+
+    goToSignUp = () => {
+        this.props.navigation.navigate('SignUp');
     }
 
     render() {
         let { username, password } = this.state;
-        let { textInput, button, navigationButton, container } = styles;
+        let { textInput, button, navigationButton, container, innercontainer } = styles;
         // let isConfirmed = badEntry && { borderColor: 'red' }
-        const resizeMode = "contain"
+        const resizeMode = "stretch"
         return (
 
+            <View style={styles.container}>
+                <ImageBackground
+                    style={{
+                        flex: 1,
+                        
+                    }}
+                    source={require('../utilities/drinkbackground.jpg')}>
+                    <View style={innercontainer}>
 
 
-            <View style={container}>
-
-                <Image source={require('../utilities/boozeittemplogo.png')}
-                    style={{ width: 350, height: 200, resizeMode }} />
+                        <Image source={require('../utilities/boozeittemplogo.png')}
+                            style={{ width: 350, height: 200, resizeMode }} />
 
 
-                <Text style={{ fontSize: 50, color: 'white' }}>Sign In </Text>
+                        {/* <Text style={{ fontSize: 50, color: 'white' }}>Sign In </Text> */}
 
-                <View>
+                        <View>
 
-                    <Text style={{ color: 'white' }}> Username </Text>
-                    <TextInput
-                        textAlign='center'
-                        onChangeText={username => { this.setState({ username }) }}
-                        value={username}
-                        style={textInput}
-                        underlineColorAndroid= 'transparent'
-                    />
+                            <Text style={{ color: 'white', fontSize: 20 }}> Username </Text>
+                            <TextInput
+                                textAlign='center'
+                                onChangeText={username => { this.setState({ username }) }}
+                                value={username}
+                                style={textInput}
+                                underlineColorAndroid='transparent'
+                            />
 
-                    <Text style={{ color: 'white' }}>Password</Text>
-                    <TextInput
-                        secureTextEntry
-                        textAlign='center'
-                        onChangeText={password => { this.setState({ password }) }}
-                        value={password}
-                        style={[textInput]}
-                        underlineColorAndroid= 'transparent'
-                    />
+                            <Text style={{ color: 'white', fontSize: 20 }}>Password</Text>
+                            <TextInput
+                                secureTextEntry
+                                textAlign='center'
+                                onChangeText={password => { this.setState({ password }) }}
+                                value={password}
+                                style={[textInput]}
+                                underlineColorAndroid='transparent'
+                            />
 
-                    {/* {badEntry && <Text style={badPassword}>UserName or Password Invalid</Text>} */}
+                            {/* {badEntry && <Text style={badPassword}>UserName or Password Invalid</Text>} */}
 
-                <View style={{flexDirection:'row', justifyContent: 'space-around'}}>
-                    <View style={{ alignItems: 'center' }}>
-                        <Button
-                            onPress={() => { this.props.changeScreen('USER_PAGE') }}
-                            style={button}
-                            text='Sign In'
-                            textStyle={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}
-                        />
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                                <View style={{ alignItems: 'center' }}>
+                                    <Button
+                                        onPress={this.signIntoApp}
+                                        style={button}
+                                        text='Sign In'
+                                        textStyle={{ color: 'white',fontWeight: 'bold', fontSize: 15 }}
+                                    />
+                                </View>
+                                <View style={{ alignItems: 'center' }}>
+                                    <Button
+                                        onPress={this.goToSignUp}
+                                        style={button}
+                                        text='Sign Up'
+                                        textStyle={{ color: 'white',fontWeight: 'bold', fontSize: 15 }}
+                                    />
+                                </View>
+                            </View>
+                        </View>
+
+
+
+
                     </View>
-                    <View style={{ alignItems: 'center' }}>
-                        <Button
-                            onPress={() => { this.props.changeScreen('SIGN_UP') }}
-                            style={navigationButton}
-                            text='Sign Up'
-                            textStyle={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}
-                        />
-                    </View>
-                </View>
-                </View>
-
-
-
-
-
+                </ImageBackground>
             </View>
         );
     }
@@ -98,25 +104,32 @@ class SignIn extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        alignItems: 'stretch',
+    },
+    innercontainer: {
+        flex: 1,
         alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0, .25)',
         justifyContent: 'center'
     },
     button: {
-        backgroundColor: 'red',
+        backgroundColor: 'rgba(255,0,255, 0)',
         alignItems: 'center',
         justifyContent: 'center',
         height: 35,
         width: 100,
-        borderRadius: 5,
+        borderRadius: 100,
+        borderColor: 'white',
+        borderWidth: 2
     },
-    navigationButton: {
-        backgroundColor: 'blue',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: 35,
-        width: 120,
-        borderRadius: 5,
-    },
+    // navigationButton: {
+    //     backgroundColor: 'blue',
+    //     alignItems: 'center',
+    //     justifyContent: 'center',
+    //     height: 35,
+    //     width: 120,
+    //     borderRadius: 100,
+    // },
     buttonText: {
         color: 'white'
     },
@@ -130,7 +143,8 @@ const styles = StyleSheet.create({
         width: 250,
         borderRadius: 100,
         marginBottom: 10,
-        
+        fontSize: 20,
+        color: "white"
     }
 });
 

@@ -17,6 +17,14 @@ class SignUp extends Component {
         badEntry: false
     }
 
+
+    static navigationOptions = {
+        headerStyle: {
+            backgroundColor: 'rgba(0,0,0, .50)',
+           
+        }
+    }
+
     submitUser = () => {
         let { username, email, password, confirm } = this.state;
 
@@ -35,18 +43,30 @@ class SignUp extends Component {
         }
     }
 
+    signUpForApp = () => {
+        this.props.navigation.navigate('UserPage');
+    }
+
     render() {
         let { username, email, password, confirm, badEntry } = this.state;
-        let { textInput, button, navigationButton, badPassword, container } = styles;
+        let { textInput, button, navigationButton, badPassword, container, innercontainer } = styles;
         let isConfirmed = badEntry && { borderColor: 'red' }
         return (
 
             <View style={container}>
-                <Text style={{ fontSize: 50, color: 'white' }}>Add User </Text>
+                <ImageBackground
+                    style={{
+                        flex: 1,
+                        // resizeMode: 'stretch'
+                    }}
+                    source={require('../utilities/drinkbackground.jpg')}>
+                    <View style={innercontainer}>
+
+                <Text style={{ fontSize: 50, color: 'white' }}>Join</Text>
 
                 <View>
 
-                    <Text style={{ color: 'white' }}> Username </Text>
+                    <Text style={{ color: 'white', fontSize: 20}}> Username </Text>
                     <TextInput
                         textAlign='center'
                         onChangeText={username => { this.setState({ username }) }}
@@ -55,7 +75,7 @@ class SignUp extends Component {
                         underlineColorAndroid= 'transparent'
                     />
 
-                    <Text style={{ color: 'white' }}>Email</Text>
+                    <Text style={{ color: 'white', fontSize: 20 }}>Email</Text>
                     <TextInput
                         textContentType='emailAddress'
                         textAlign='center'
@@ -65,7 +85,7 @@ class SignUp extends Component {
                         underlineColorAndroid= 'transparent'
                     />
 
-                    <Text style={{ color: 'white' }}>Password</Text>
+                    <Text style={{ color: 'white', fontSize: 20 }}>Password</Text>
                     <TextInput
                         secureTextEntry
                         textAlign='center'
@@ -74,7 +94,7 @@ class SignUp extends Component {
                         style={[textInput, isConfirmed]}
                         underlineColorAndroid= 'transparent'
                     />
-                    <Text style={{ color: 'white' }}>Confirm Password</Text>
+                    <Text style={{ color: 'white', fontSize: 20 }}>Confirm Password</Text>
                     <TextInput
                         secureTextEntry
                         textAlign='center'
@@ -89,7 +109,7 @@ class SignUp extends Component {
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                         <View style={{ alignItems: 'center' }}>
                             <Button
-                                onPress={this.submitUser}
+                                onPress={this.signUpForApp}
                                 style={button}
                                 text='Sign Up'
                                 textStyle={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}
@@ -97,17 +117,10 @@ class SignUp extends Component {
                             />
                         </View>
 
-                        <View style={{ alignItems: 'center' }}>
-                            <Button
-                                onPress={() => { this.props.changeScreen('SIGN_IN') }}
-                                style={navigationButton}
-                                text='Sign In'
-                                textStyle={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}
-                                underlineColorAndroid= 'transparent'
-                            />
-                        </View>
                     </View>
                 </View>
+            </View>
+            </ImageBackground>
             </View>
         );
     }
@@ -116,25 +129,34 @@ class SignUp extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // backgroundColor: 'blue',
+        alignItems: 'stretch',
         justifyContent: 'center'
     },
+    innercontainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        backgroundColor: 'rgba(0,0,0, .35)',
+        marginTop: 20
+    },
     button: {
-        backgroundColor: 'red',
+        backgroundColor: 'rgba(255,0,255, 0)',
         alignItems: 'center',
         justifyContent: 'center',
         height: 35,
         width: 100,
-        borderRadius: 5,
+        borderRadius: 100,
+        borderColor: 'white',
+        borderWidth: 2
     },
-    navigationButton: {
-        backgroundColor: 'blue',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: 35,
-        width: 120,
-        borderRadius: 5,
-    },
+    // navigationButton: {
+    //     backgroundColor: 'blue',
+    //     alignItems: 'center',
+    //     justifyContent: 'center',
+    //     height: 35,
+    //     width: 120,
+    //     borderRadius: 5,
+    // },
     buttonText: {
         color: 'white'
     },
@@ -148,7 +170,8 @@ const styles = StyleSheet.create({
         width: 250,
         borderRadius: 100,
         marginBottom: 10,
-        
+        fontSize: 20,
+        color: "white"
     }
 });
 
