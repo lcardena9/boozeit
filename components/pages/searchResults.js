@@ -4,10 +4,6 @@ import Button from '../utilities/button';
 import { connect } from 'react-redux';
 import { getDrinks } from '../utilities/actions';
 
-const mapDispatchToProps = dispatch => ({
-    loadDrinkData: () => dispatch(getDrinks()),
-});
-
 class SearchResults extends Component {
     state = {
         search: ''
@@ -23,31 +19,29 @@ class SearchResults extends Component {
     render() {
         let { search } = this.state;
         let { container, innercontainer, title } = styles;
-        // let isConfirmed = badEntry && { borderColor: 'red' }
         return (
 
             <View style={container}>
                 <ImageBackground
                     style={{
                         flex: 1,
-                        // resizeMode: 'stretch'
                     }}
                     source={require('../utilities/drinkbackground.jpg')}>
                     <View style={innercontainer}>
                         <View >
                             <View>
-
+                            {/* <Image source={require('./margbackground.jpg')} style={{height:200, width: 200}} />} */}
                                 {this.props.doneLoading && (
                                     <View style={{ flex: 1 }}>
-                                        <Text style={[title, { color: 'white', fontWeight: 'bold', textAlign: 'center' }]}>Drinks</Text>
+                                        <Text style={[title, { color: 'white', fontWeight: 'bold', textAlign: 'center', alignItems: 'center' }]}>Drinks</Text>
                                         <FlatList
-                                            style={{ flex: 1, backgroundColor: 'rgba(255,0,255, .35)'}}
+                                            style={{ flex: 1}}
                                             data={this.props.drinks}
                                             numColumns='2'
                                             renderItem={({ item }) => (
                                                 <View style={{ height: 250, width: 200}}>
                                                     <TouchableOpacity onPress={()=>this.props.navigation.navigate('RecipePage', {item})}>
-                                                        <Image source={{ uri: item.drinkPic}} style={{height: 200, width: 200,}}/>
+                                                        <Image source={{ uri: item.drinkPic}} style={{height: 195, width: 195, borderRadius: 25}}/>
                                                     </TouchableOpacity>
                                                     
                                                     <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}>{item.drinkName}</Text>
@@ -77,12 +71,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'stretch',
-        backgroundColor: 'rgba(0,0,0, .25)',
     },
     innercontainer: {
         flex: 1,
         alignItems: 'center',
-        marginTop: 20,
+        backgroundColor: 'rgba(0,0,0, .50)',
+        justifyContent: 'center'
+
     },
     buttonText: {
         color: 'white'
@@ -107,4 +102,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchResults);
+export default connect(mapStateToProps)(SearchResults);

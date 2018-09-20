@@ -41,7 +41,8 @@ export const getDrinks = (searchTerm) => dispatch => {
             ingredientMeasurement13: drinks.strMeasure13,
             ingredientMeasurement14: drinks.strMeasure14,
             ingredientMeasurement15: drinks.strMeasure15,
-            instructions: drinks.strInstructions
+            instructions: drinks.strInstructions,
+            glass: drinks.strGlass
         }))
         dispatch({ type: RECEIVED_DATA, payload: api_drinks })
     });

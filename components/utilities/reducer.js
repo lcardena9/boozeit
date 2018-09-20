@@ -1,4 +1,4 @@
-import { RECEIVED_DATA } from './constants';
+import { RECEIVED_DATA, REQUESTED_DATA } from './constants';
 
 const initialState = {
   doneLoading: false,
@@ -25,6 +25,8 @@ const rootReducer = (state = initialState, action) => {
         drinks: action.payload,
         doneLoading: true
       }
+      case REQUESTED_DATA:
+        return {...state, doneLoading: false}
     default:
       return state;
   }

@@ -4,6 +4,7 @@ import Button from '../utilities/button';
 import { connect } from 'react-redux';
 import { getDrinks } from '../utilities/actions';
 import { ScrollView } from 'react-native-gesture-handler';
+// import { renderIf } from 'render-if';
 
 const mapDispatchToProps = dispatch => ({
     loadDrinkData: () => dispatch(getDrinks()),
@@ -21,11 +22,11 @@ class RecipePage extends Component {
     }
 
     render() {
-        let { container, innercontainer, title, button } = styles;
+        let { container, innercontainer, title, button, image } = styles;
         const { state } = this.props.navigation;
-        const drink = state.params.item;
-        console.log('Drink:', drink)
-        console.log('drink name:', drink.drinkName)
+        const item = state.params.item;
+        console.log('Drink:', item)
+        console.log('drink name:', item.drinkName)
 
         return (
 
@@ -42,50 +43,58 @@ class RecipePage extends Component {
                                 {this.props.doneLoading && (
                                     <View style={{ height: 1000 }} alignItems='center'>
 
-                                        <Text style={[title, { color: 'white', fontWeight: 'bold', textAlign: 'center' }]}>{drink.drinkName}</Text>
-                                        
-                                            <View style={{ height: 450, width: 300, alignItems: 'center' }}>
-                                        <ScrollView >
-                                            <View style={{ flex: 1, alignItems: 'center' }}>
-                                                <Image source={{ uri: drink.drinkPic }} style={{ height: 250, width: 250, marginBottom: 0, justifyContent: 'space-around', borderRadius: 25 }} />
-                                                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}>{drink.ingredientMeasurement1}</Text>
-                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}> </Text>
-                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}>{drink.ingredient1}</Text>
+                                        <Text style={[title, { color: 'white', fontWeight: 'bold', textAlign: 'center' }]}>{item.drinkName}</Text>
+
+                                        <View style={{ height: 450, width: 300, alignItems: 'center' }}>
+                                            <ScrollView >
+                                                <View style={{ flex: 1, alignItems: 'center' }}>
+                                                    <Image source={{ uri: item.drinkPic }} style={image} />
+
+                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}>Recommended Glass: {item.glass}</Text>
+                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}>{item.ingredientMeasurement1} {item.ingredient1}</Text>
+                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}>{item.ingredientMeasurement2} {item.ingredient2}</Text>
+                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}>{item.ingredientMeasurement3} {item.ingredient3}</Text>
+                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}>{item.ingredientMeasurement4} {item.ingredient4}</Text>
+                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}>{item.ingredientMeasurement5} {item.ingredient5}</Text>
+                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}>{item.ingredientMeasurement6} {item.ingredient6}</Text>
+                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 16, justifyContent: 'center' }}>{item.instructions}</Text>
+                                                
+                                                
+                                                
+                                                    {/* {renderIf( item.ingredient4 = '' )(
+                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}>{item.ingredientMeasurement4} {item.ingredient4}</Text>
+                                                    )} */}
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
                                                 </View>
-                                                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}>{drink.ingredientMeasurement2}</Text>
-                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}> </Text>
-                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}>{drink.ingredient2}</Text>
-                                                </View>
-                                                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}>{drink.ingredientMeasurement3}</Text>
-                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}> </Text>
-                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}>{drink.ingredient3}</Text>
-                                                </View>
-                                                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}>{drink.ingredientMeasurement4}</Text>
-                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}> </Text>
-                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}>{drink.ingredient4}</Text>
-                                                </View>
-                                                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}>{drink.ingredientMeasurement5}</Text>
-                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}> </Text>
-                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}>{drink.ingredient5}</Text>
-                                                </View>
-                                                <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 16, justifyContent: 'center' }}>{drink.instructions}</Text>
-                                            </View>
-                                          
-                                        </ScrollView>
-                                            </View>
-                                            <Button
-                                                onPress={()=>this.props.navigation.navigate('UserPage', {drink})}
-                                                style={button}
-                                                text='Save'
-                                                textStyle={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}
-                                                underlineColorAndroid='transparent'
-                                            />
-                                        
+
+                                            </ScrollView>
+                                        </View>
+                                        <Button
+                                            onPress={() => this.props.navigation.navigate('UserPage', { item })}
+                                            style={button}
+                                            text='Save'
+                                            textStyle={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}
+                                            underlineColorAndroid='transparent'
+                                        />
+
 
                                     </View>
                                 )}
@@ -109,12 +118,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'stretch',
-        backgroundColor: 'rgba(0,0,0, .25)',
+        backgroundColor: 'rgba(0,0,0, .50)',
     },
     innercontainer: {
         flex: 1,
         alignItems: 'stretch',
-        marginTop: 20,       
+        marginTop: 20,
     },
     button: {
         backgroundColor: 'rgba(255,0,255, .75)',
@@ -133,6 +142,15 @@ const styles = StyleSheet.create({
     badPassword: {
         color: 'red',
         marginBottom: 5
+    },
+    image: { 
+        height: 250,
+        width: 250,
+        marginBottom: 0,
+        justifyContent: 'space-around',
+        borderRadius: 25,
+        borderColor: 'rgba(90, 203, 238, 1)',
+        borderWidth: 2
     },
     textInput: {
         backgroundColor: 'rgba(255,0,255, .75)',

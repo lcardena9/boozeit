@@ -9,47 +9,66 @@ const mapDispatchToProps = dispatch => ({
 
 class SignIn extends Component {
     state = {
-        username: '',
-        password: '',
+        username: 'lucas',
+        password: 'abc',
+        users: [
+            {
+                username: 'lucas',
+                password: 'abc'
+            }
+        ],
+        goodLogin: false,
+        badLoginAttempt: false,
+    }
+
+    login = user => {
+        let users = this.state.users;
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].email === user.email && users[i].password === user.password) {
+                this.props.navigation.navigate('UserPage');
+                return;
+            }
+        }
+        this.setState({ badLoginAttempt: true })
+    }
+
+
+    formLogin = event => {
+        event.preventDefault();
+        this.login(this.state);
+        this.setState({
+            username: '',
+            password: ''
+        })
     }
 
     static navigationOptions = {
         header: null
     }
 
-    signIntoApp = () => {
-        this.props.navigation.navigate('UserPage');
-    }
 
     goToSignUp = () => {
         this.props.navigation.navigate('SignUp');
     }
 
     render() {
-        let { username, password } = this.state;
-        let { textInput, button, navigationButton, container, innercontainer } = styles;
-        // let isConfirmed = badEntry && { borderColor: 'red' }
+        let { username, password, badLoginAttempt } = this.state;
+        let { textInput, button, badPassword, container, innercontainer } = styles;
+        let isBadAttempt = badLoginAttempt && { borderColor: 'red' }
         const resizeMode = "stretch"
         return (
 
-            <View style={styles.container}>
+            <View style={container}>
                 <ImageBackground
                     style={{
                         flex: 1,
-                        
+
                     }}
                     source={require('../utilities/drinkbackground.jpg')}>
                     <View style={innercontainer}>
-
-
                         <Image source={require('../utilities/boozeittemplogo.png')}
                             style={{ width: 350, height: 200, resizeMode }} />
-
-
-                        {/* <Text style={{ fontSize: 50, color: 'white' }}>Sign In </Text> */}
-
                         <View>
-
                             <Text style={{ color: 'white', fontSize: 20 }}> Username </Text>
                             <TextInput
                                 textAlign='center'
@@ -58,26 +77,25 @@ class SignIn extends Component {
                                 style={textInput}
                                 underlineColorAndroid='transparent'
                             />
-
                             <Text style={{ color: 'white', fontSize: 20 }}>Password</Text>
                             <TextInput
                                 secureTextEntry
                                 textAlign='center'
                                 onChangeText={password => { this.setState({ password }) }}
                                 value={password}
-                                style={[textInput]}
+                                style={[textInput, isBadAttempt]}
                                 underlineColorAndroid='transparent'
                             />
-
-                            {/* {badEntry && <Text style={badPassword}>UserName or Password Invalid</Text>} */}
-
+                            <View>
+                                {badLoginAttempt && <Text style={badPassword}>UserName or Password Invalid</Text>}
+                            </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                                 <View style={{ alignItems: 'center' }}>
                                     <Button
-                                        onPress={this.signIntoApp}
+                                        onPress={this.formLogin}
                                         style={button}
                                         text='Sign In'
-                                        textStyle={{ color: 'white',fontWeight: 'bold', fontSize: 15 }}
+                                        textStyle={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}
                                     />
                                 </View>
                                 <View style={{ alignItems: 'center' }}>
@@ -85,15 +103,11 @@ class SignIn extends Component {
                                         onPress={this.goToSignUp}
                                         style={button}
                                         text='Sign Up'
-                                        textStyle={{ color: 'white',fontWeight: 'bold', fontSize: 15 }}
+                                        textStyle={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}
                                     />
                                 </View>
                             </View>
                         </View>
-
-
-
-
                     </View>
                 </ImageBackground>
             </View>
@@ -109,7 +123,7 @@ const styles = StyleSheet.create({
     innercontainer: {
         flex: 1,
         alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0, .25)',
+        backgroundColor: 'rgba(0,0,0, .50)',
         justifyContent: 'center'
     },
     button: {
@@ -122,20 +136,13 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         borderWidth: 2
     },
-    // navigationButton: {
-    //     backgroundColor: 'blue',
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
-    //     height: 35,
-    //     width: 120,
-    //     borderRadius: 100,
-    // },
     buttonText: {
         color: 'white'
     },
     badPassword: {
         color: 'red',
-        marginBottom: 5
+        marginBottom: 5,
+        fontSize: 17
     },
     textInput: {
         backgroundColor: 'rgba(255,0,255, .75)',
@@ -146,6 +153,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "white"
     }
+
 });
 
 export default connect(null, mapDispatchToProps)(SignIn);

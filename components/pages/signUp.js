@@ -40,12 +40,11 @@ class SignUp extends Component {
                 confirm: '',
                 badEntry: false
             })
+            
         }
-    }
-
-    signUpForApp = () => {
         this.props.navigation.navigate('UserPage');
     }
+
 
     render() {
         let { username, email, password, confirm, badEntry } = this.state;
@@ -109,7 +108,7 @@ class SignUp extends Component {
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                         <View style={{ alignItems: 'center' }}>
                             <Button
-                                onPress={this.signUpForApp}
+                                onPress={this.submitUser}
                                 style={button}
                                 text='Sign Up'
                                 textStyle={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}
@@ -130,13 +129,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'stretch',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: 'rgba(0,0,0, .5)',
     },
     innercontainer: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-evenly',
-        backgroundColor: 'rgba(0,0,0, .35)',
         marginTop: 20
     },
     button: {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, StyleSheet, FlatList, TextInput, ImageBackground, Image } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, FlatList, TextInput, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import Button from '../utilities/button';
 import { connect } from 'react-redux';
 import { getDrinks } from '../utilities/actions'
@@ -40,9 +40,9 @@ class UserPage extends Component {
 
         console.log(this.props.navigation)
         const { state } = this.props.navigation;
-        
-        const drink = state.params !== undefined ? state.params.drink : {};
-        console.log(drink)
+
+        const item = state.params !== undefined ? state.params.item : {};
+        console.log(item)
 
         return (
 
@@ -56,7 +56,20 @@ class UserPage extends Component {
                     <View style={innercontainer}>
                         <Text style={title}> Drinks {this.props.drinks[0] && this.props.drinks[0].idDrink}</Text>
 
-                        <View>
+                        <View style={{ height: 450, width: 300, alignItems: 'center' }}>
+
+
+                            <ScrollView >
+                                <View style={{ flex: 1, alignItems: 'center' }}>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('RecipePage', { item })}>
+                                        <Image source={{ uri: item.drinkPic }} style={{ height: 150, width: 150, marginBottom: 0, justifyContent: 'space-around', borderRadius: 25 }} />
+                                    </TouchableOpacity>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                                        <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}>{item.drinkName}</Text>
+
+                                    </View>
+                                </View>
+                            </ScrollView>
 
                             <TextInput
                                 textAlign='center'
@@ -65,37 +78,29 @@ class UserPage extends Component {
                                 style={textInput}
                                 underlineColorAndroid='transparent'
                             />
-                        <View style={{ alignItems: 'center' }}>
-                            <Button
-                                onPress={this.searchForDrink}
-                                style={button}
-                                text='Search'
-                                textStyle={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}
-                                underlineColorAndroid='transparent'
-                            />
-
-                                                {/* <View style={{ flex: 1, alignItems: 'center' }}>
-                                                <Image source={{ uri: drink.drinkPic }} style={{ height: 250, width: 250, marginBottom: 10, justifyContent: 'space-around', borderRadius: 25 }} />
-                                                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}>{drink.ingredientMeasurement1}</Text>
-                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}> </Text>
-                                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', fontSize: 20, justifyContent: 'center' }}>{drink.ingredient1}</Text>
-                                                </View>
-                                                </View> */}
+                            <View style={{ alignItems: 'center' }}>
+                                <Button
+                                    onPress={this.searchForDrink}
+                                    style={button}
+                                    text='Search'
+                                    textStyle={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}
+                                    underlineColorAndroid='transparent'
+                                />
 
 
 
 
 
 
-                            <Button
-                                onPress={this.signOutOfApp}
-                                style={button}
-                                text='Sign Out'
-                                textStyle={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}
-                            />
+
+                                <Button
+                                    onPress={this.signOutOfApp}
+                                    style={button}
+                                    text='Sign Out'
+                                    textStyle={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}
+                                />
+                            </View>
                         </View>
-                    </View>
                     </View>
                 </ImageBackground>
             </View>
@@ -106,20 +111,11 @@ const mapStatetoProps = state => ({
     drinks: state.drinks
 })
 
-// const mapDispatchToProps = dispatch => ({
-//     changeScreen: page => dispatch({ type: 'CHANGE_PAGE', newPage: page })
-// })
 
 export default connect(mapStatetoProps, mapDispatchToProps)(UserPage);
 
 const styles = StyleSheet.create({
-    // recipeBox: {
-    //     width: 300,
-    //     height: 75,
-    //     borderColor: 'blue',
-    //     borderWidth: 1,
-    //     backgroundColor: 'yellow',
-    // },
+
     title: {
         fontSize: 50,
         marginTop: 40,
@@ -134,7 +130,7 @@ const styles = StyleSheet.create({
     innercontainer: {
         flex: 1,
         alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0, .25)',
+        backgroundColor: 'rgba(0,0,0, .50)',
         justifyContent: 'center'
     },
     button: {
