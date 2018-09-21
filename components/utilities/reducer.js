@@ -1,8 +1,9 @@
-import { RECEIVED_DATA, REQUESTED_DATA } from './constants';
+import { RECEIVED_DATA, REQUESTED_DATA, SAVE_DRINK } from './constants';
 
 const initialState = {
   doneLoading: false,
   drinks: [],
+  savedDrinks: [],
   users: [
     { username: 'lulucash', email: 'lcardena9@gmail.com' }
   ],
@@ -25,8 +26,13 @@ const rootReducer = (state = initialState, action) => {
         drinks: action.payload,
         doneLoading: true
       }
-      case REQUESTED_DATA:
-        return {...state, doneLoading: false}
+    case REQUESTED_DATA:
+      return { ...state, doneLoading: false }
+    case SAVE_DRINK:
+      return {
+        ...state,
+        savedDrinks: [...state.savedDrinks, action.payload]
+      }
     default:
       return state;
   }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Image, ImageBackground } from 'react-native';
-import Button from '../utilities/button';
+import { StyleSheet, Text, View, TextInput, Image, ImageBackground, Button } from 'react-native';
+import MyButton from '../utilities/button';
 import { connect } from 'react-redux';
 
 const mapDispatchToProps = dispatch => ({
@@ -37,8 +37,8 @@ class SignIn extends Component {
         event.preventDefault();
         this.login(this.state);
         this.setState({
-            username: '',
-            password: ''
+            username: 'lucas',
+            password: 'abc'
         })
     }
 
@@ -91,7 +91,7 @@ class SignIn extends Component {
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                                 <View style={{ alignItems: 'center' }}>
-                                    <Button
+                                    <MyButton
                                         onPress={this.formLogin}
                                         style={button}
                                         text='Sign In'
@@ -99,7 +99,7 @@ class SignIn extends Component {
                                     />
                                 </View>
                                 <View style={{ alignItems: 'center' }}>
-                                    <Button
+                                    <MyButton
                                         onPress={this.goToSignUp}
                                         style={button}
                                         text='Sign Up'
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     button: {
-        backgroundColor: 'rgba(255,0,255, 0)',
+        backgroundColor: 'rgba(255,0,255, .75)',
         alignItems: 'center',
         justifyContent: 'center',
         height: 35,
@@ -151,7 +151,9 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         marginBottom: 10,
         fontSize: 20,
-        color: "white"
+        color: "white",
+        borderColor: 'white',
+        borderWidth: 2
     }
 
 });

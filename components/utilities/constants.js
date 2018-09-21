@@ -1,2 +1,3 @@
 export const RECEIVED_DATA = 'RECEIVED_DATA';
 export const REQUESTED_DATA = 'REQUESTED_DATA';
+export const SAVE_DRINK = 'SAVE_DRINK';

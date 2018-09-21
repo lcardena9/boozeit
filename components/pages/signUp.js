@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
     button: {
-        backgroundColor: 'rgba(255,0,255, 0)',
+        backgroundColor: 'rgba(255,0,255, .75)',
         alignItems: 'center',
         justifyContent: 'center',
         height: 35,
@@ -148,14 +148,6 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         borderWidth: 2
     },
-    // navigationButton: {
-    //     backgroundColor: 'blue',
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
-    //     height: 35,
-    //     width: 120,
-    //     borderRadius: 5,
-    // },
     buttonText: {
         color: 'white'
     },
@@ -170,7 +162,9 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         marginBottom: 10,
         fontSize: 20,
-        color: "white"
+        color: "white",
+        borderColor: 'white',
+        borderWidth: 2
     }
 });
 

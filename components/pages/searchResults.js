@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, ImageBackground, FlatList, TouchableOpacity } from 'react-native';
-import Button from '../utilities/button';
+import { StyleSheet, Text, View, Image, ImageBackground, FlatList, TouchableOpacity, Button } from 'react-native';
+import MyButton from '../utilities/button';
 import { connect } from 'react-redux';
 import { getDrinks } from '../utilities/actions';
+import {Navigation} from 'react-native-navigation';
 
 class SearchResults extends Component {
     state = {
@@ -10,11 +11,19 @@ class SearchResults extends Component {
     }
 
     static navigationOptions = {
-        headerStyle: {
-            backgroundColor: 'rgba(0,0,0, .50)',
+        headerRight:(
+            <Button
+                onPress={()=>Navigation.handleDeepLink({link:'SignIn'})}
+                title='Log Out'
+                color='rgba(255,0,255, .75)'
+                borderRadius='100'
+                marginRight='10'
+                />),
+            headerStyle: {
+                backgroundColor: 'rgba(0,0,0, .50)',
+            }
             
         }
-    }
 
     render() {
         let { search } = this.state;
@@ -32,6 +41,8 @@ class SearchResults extends Component {
                             <View>
                             {/* <Image source={require('./margbackground.jpg')} style={{height:200, width: 200}} />} */}
                                 {this.props.doneLoading && (
+                                                                        
+                                    
                                     <View style={{ flex: 1 }}>
                                         <Text style={[title, { color: 'white', fontWeight: 'bold', textAlign: 'center', alignItems: 'center' }]}>Drinks</Text>
                                         <FlatList
@@ -78,6 +89,10 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0, .50)',
         justifyContent: 'center'
 
+    },
+    button: {
+        borderRadius: 100,
+        marginRight: 10
     },
     buttonText: {
         color: 'white'
