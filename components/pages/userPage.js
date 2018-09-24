@@ -1,38 +1,55 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, StyleSheet, FlatList, TextInput, ImageBackground, Image, TouchableOpacity, Button } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TextInput, ImageBackground, Image, TouchableOpacity, Alert  } from 'react-native';
 import MyButton from '../utilities/button';
 import { connect } from 'react-redux';
-import { getDrinks } from '../utilities/actions'
-import {Navigation} from 'react-native-navigation';
+import { getDrinks, deleteDrink } from '../utilities/actions'
+import { Navigation } from 'react-native-navigation';
+
+
 
 const mapDispatchToProps = dispatch => ({
   loadDrinkData: (searchTerm) => dispatch(getDrinks(searchTerm)),
+  deleteDrink: drink => dispatch(deleteDrink(drink))
 });
 
-buttonPress = () => {
-  this.props.loadDrinkData(this.state.search);
-  this.props.navigation.navigate('Search')
-}
-
 class UserPage extends Component {
+
   state = {
     search: 'margarita',
+    dialogVisible: false
   }
+
 
   searchForDrink = () => {
     this.props.loadDrinkData(this.state.search);
     this.props.navigation.navigate('SearchResults')
   }
 
+  deleteButton = () => {
+    const drinkToDelete = this.props.navigation.navigate('UserPage', {item})
+    console.log('this is', drinkToDelete)
+    this.props.deleteDrink(drinkToDelete);
+    Alert.alert('This Drink Has Been Removed');
+    this.props.navigation.navigate('UserPage')
+  }
+
+  onLongPressButton() {
+    Alert.alert('This Drink Has Been Removed');
+  }
+
+
+
+
+
   static navigationOptions = {
-    headerRight: (
-      <Button
-        onPress={()=>Navigation.handleDeepLink({link:'SignIn'})}
-        title='Log Out'
-        color='rgba(255,0,255, .75)'
-        borderRadius='100'
-        marginRight='10'
-      />),
+    // headerRight: (
+    //   <Button
+    //     onPress={() => Navigation.handleDeepLink({ link: 'SignIn' })}
+    //     title='Log Out'
+    //     color='rgba(255,0,255, .75)'
+    //     borderRadius='100'
+    //     marginRight='10'
+    //   />),
     headerStyle: {
       backgroundColor: 'rgba(0,0,0, .50)',
     }
@@ -42,14 +59,10 @@ class UserPage extends Component {
   render() {
     let { search } = this.state;
     let { textInput, button, container, title, innercontainer } = styles;
-
-
-    console.log(this.props.navigation)
     const { state } = this.props.navigation;
-
     const item = state.params !== undefined ? state.params.item : {};
-    console.log(item)
-
+    console.log('Drink again:', item)
+    console.log('UserPage: ', this.props.navigation)
     return (
 
       <View style={container}>
@@ -70,7 +83,8 @@ class UserPage extends Component {
                 numColumns='2'
                 renderItem={({ item }) => (
                   <View style={{ height: 250, width: 200 }}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('RecipePage', { item })}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('RecipePage', { item })}
+                      onLongPress={this.deleteButton}>
                       <Image source={{ uri: item.drinkPic }} style={{ height: 195, width: 195, borderRadius: 25 }} />
                     </TouchableOpacity>
 
@@ -140,7 +154,8 @@ const styles = StyleSheet.create({
     width: 100,
     borderRadius: 100,
     borderColor: 'white',
-    borderWidth: 2
+    borderWidth: 2,
+    marginBottom: 10
   },
 
   buttonText: {

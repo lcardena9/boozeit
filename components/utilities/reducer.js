@@ -1,9 +1,10 @@
-import { RECEIVED_DATA, REQUESTED_DATA, SAVE_DRINK } from './constants';
+import { RECEIVED_DATA, REQUESTED_DATA, SAVE_DRINK, DELETE_DRINK } from './constants';
 
 const initialState = {
   doneLoading: false,
   drinks: [],
   savedDrinks: [],
+  deletedDrinks: [],
   users: [
     { username: 'lulucash', email: 'lcardena9@gmail.com' }
   ],
@@ -33,6 +34,17 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         savedDrinks: [...state.savedDrinks, action.payload]
       }
+      case DELETE_DRINK:
+      const currentDrinkToDelete = [state.savedDrinks];
+      const indexToDelete = currentDrinkToDelete.findIndex(function(drink){
+        return drink.idDrink === action.payload.idDrink; 
+      }); 
+      return{
+        ...state,
+        savedDrinks: {savedDrinks:[...currentDrinkToDelete.slice(0, indexToDelete),
+        ...currentDrinkToDelete.slice(indexToDelete + 1)]
+      },
+    }
     default:
       return state;
   }

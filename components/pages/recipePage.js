@@ -30,6 +30,7 @@ class RecipePage extends Component {
 
   saveButton = () => {
     let drink = this.props.navigation.getParam('item', { msg: 'bad navigation' });
+    console.log('drinkfromsave', drink)
     // this sends drink to reducer
     this.props.saveDrink(drink);
     

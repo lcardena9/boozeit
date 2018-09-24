@@ -1,4 +1,4 @@
-import { RECEIVED_DATA, REQUESTED_DATA, SAVE_DRINK } from './constants'
+import { RECEIVED_DATA, REQUESTED_DATA, SAVE_DRINK, DELETE_DRINK } from './constants'
 import axios from 'axios';
 
 // helper function (could go into another file)
@@ -46,4 +46,9 @@ export const getDrinks = (searchTerm) => dispatch => {
 export const saveDrink = drink => ({
     type: SAVE_DRINK,
     payload: drink
+})
+
+export const deleteDrink = drink => ({
+    type: DELETE_DRINK,
+    payload:drink
 })
